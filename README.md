@@ -1,4 +1,10 @@
 # AirbnbHostRate
+Business domain language  
+User:
+Rules:
+Tasks:
+
+
 Tasks
 - (10 pts) Describe the requirements of the problem with a simple document that lists the rules of the database in the problem domain language. Then describe a list of business rules and the list of possible nouns and actions you identified. I'm expecting this to be a short 1 or 2 pages document.  
 This database aim to be an internal tool to manage Airbnb Host.  
