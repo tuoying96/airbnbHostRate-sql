@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/tuoying96/AirbnbHostRate/issues"
   },
-  "homepage": "https://github.com/tuoying96/AirbnbHostRate#readme"
+  "homepage": "https://github.com/tuoying96/AirbnbHostRate#readme",
+  "dependencies": {
+    "sqlite3": "^5.0.0"
+  }
 }
