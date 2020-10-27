@@ -36,3 +36,5 @@ Using SB Browser
 - (10 pts) Populate the tables with test data. You can use tools such as https://www.mockaroo.com/schemas (Links to an external site.) or  https://www.generatedata.com/ (Links to an external site.).
 - (10 pts) Define and execute at least five queries that show your database. At least one query must contain a join of at least three tables, one must contain a subquery, one must be a group by with a having clause, and one must contain a complex search criterion (more than one expression with logical connectors). Experiment with advanced query mechanisms such as RCTE, PARTITION BY, or SELECT CASE/WHEN.
 - (20 pts) Create a basic Node + Express application that let's you create, display, modify and delete at least to of the tables with a foreign key between then. No need to have a polished interface, and you can use the code created in class as a starting point
+### issues
+cp ~/.eslintrc.js .   
