@@ -45,18 +45,21 @@ function myDB() {
     const query = `
     UPDATE Hosts
     SET
-      name = $Name,
-      email = $Email,
-      startFrom = $StartFrom
+      name = $name,
+      email = $email,
+      startFrom = $startFrom
     WHERE
       hostid = $hostid;`;
 
     const runPromise = util.promisify(db.run.bind(db));
 
     return runPromise(query, {
-      $Hostid: host.$Hostid,
-      $Name: host.$Name,
-      $Email: host.$Email,
+      $hostid: +host.$hostid,
+      $name: host.$name,
+      $email: host.$email,
+      $phone: host.$phone,
+      $responseRate: host.$responseRate,
+      $startFrom: host.$startFrom
     })
       .then(() => db)
       .finally(() => db.close());
