@@ -6,13 +6,19 @@ function myDB() {
 
   const getDb = () => new sqlite3.Database("./db/airbnb.sqlite3");
 
-  myDB.getSongs = function (page) {
+  myDB.getHosts = function (page) {
     const db = getDb();
 
     const PAGE_SIZE = 10;
-    const query = `SELECT TrackId, Name, Composer, UnitPrice, Milliseconds
-      FROM tracks
-      ORDER BY Milliseconds
+    const query = `SELECT hid, Hosts.name, Hosts.startFrom, ROUND(AVG(listR), 2) as hostR
+      FROM Hosts,
+      (
+      SELECT listingid, hostid as hid, Listings.listingName, AVG(Listings.rating) as listR
+      FROM  Listings
+      GROUP BY listingid
+      )
+      WHERE hid = Hosts.hostid
+      GROUP BY hid
       LIMIT ${PAGE_SIZE} OFFSET ${PAGE_SIZE * (page - 1)};`;
 
     const allPromise = util.promisify(db.all.bind(db));
