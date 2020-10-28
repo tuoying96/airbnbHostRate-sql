@@ -4,7 +4,7 @@ const util = require("util");
 function myDB() {
   const myDB = {};
 
-  const getDb = () => new sqlite3.Database("./db/airbnb.db");
+  const getDb = () => new sqlite3.Database("./db/airbnb.sqlite3");
 
   myDB.getHosts = function (page) {
     const db = getDb();
@@ -69,7 +69,7 @@ function myDB() {
     const db = getDb();
 
     const query = `
-    DELETE FROM Listings WHERE hostid==$hostid;`;
+    DELETE FROM Hosts WHERE hostid==$hostid;`;
 
     const runPromise = util.promisify(db.run.bind(db));
 
