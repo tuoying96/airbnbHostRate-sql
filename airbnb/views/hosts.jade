@@ -21,8 +21,10 @@ block content
               input.form-control.m-1(style="min-width:20px" type="text" name="$Name" value=h.name)
             label.form-group Email:
               input.form-control.m-1(style="min-width:20px" type="text" name="$Email" value=h.email)
-            //- label.form-group Rating:
-            //-   input.form-control.m-1(style="min-width:20px" type="number" name="$Milliseconds" value=s.Milliseconds)
+            label.form-group StartFrom:
+              input.form-control.m-1(style="min-width:20px" type="text" name="$StartFrom" value=h.startFrom)
+            label.form-group Rating:
+              input.form-control.m-1(style="min-width:20px" type="number" name="$Rating" value=h.hostRating)
             .form-group
               button.m-1.btn.btn-danger(type="submit" formaction="/hosts/delete") X
               button.m-1.btn.btn-secondary(type="submit" formaction="/hosts/update") Update
@@ -30,25 +32,66 @@ block content
 
       nav(aria-label="Page navigation example")
         ul(class="pagination")
+          //- for (var i = 1; i < 20; ++i) {
+          //-   li(class="page-item")
+          //-   const str ='/hosts?page=' + i
+          //-   a(class="page-link" href= str) i
+          //- }
           li(class="page-item")
             a(class="page-link" href="/hosts?page=1") 1
-
           li(class="page-item")
             a(class="page-link" href="/hosts?page=2") 2
           li(class="page-item")
             a(class="page-link" href="/hosts?page=3") 3
+          li(class="page-item")
+            a(class="page-link" href="/hosts?page=4") 4
+          li(class="page-item")
+            a(class="page-link" href="/hosts?page=5") 5
+          li(class="page-item")
+            a(class="page-link" href="/hosts?page=6") 6
+          li(class="page-item")
+            a(class="page-link" href="/hosts?page=7") 7
+          li(class="page-item")
+            a(class="page-link" href="/hosts?page=8") 8
+          li(class="page-item")
+            a(class="page-link" href="/hosts?page=9") 9
+          li(class="page-item")
+            a(class="page-link" href="/hosts?page=10") 10
+          li(class="page-item")
+            a(class="page-link" href="/hosts?page=11") 11
+          li(class="page-item")
+            a(class="page-link" href="/hosts?page=12") 12
+          li(class="page-item")
+            a(class="page-link" href="/hosts?page=13") 13
+          li(class="page-item")
+            a(class="page-link" href="/hosts?page=14") 14
+          li(class="page-item")
+            a(class="page-link" href="/hosts?page=15") 15
+          li(class="page-item")
+            a(class="page-link" href="/hosts?page=16") 16
+          li(class="page-item")
+            a(class="page-link" href="/hosts?page=17") 17
+          li(class="page-item")
+            a(class="page-link" href="/hosts?page=18") 18
+          li(class="page-item")
+            a(class="page-link" href="/hosts?page=19") 19
+          li(class="page-item")
+            a(class="page-link" href="/hosts?page=20") 20
+          li(class="page-item")
+            a(class="page-link" href="/hosts?page=21") 21
+
 
     .col-4
-      h2 Create new hosts
+      h2 Create New Hosts
 
       form(action="/hosts/create", method="post")
         .form-group
           label Name
             input.form-control(type="text", name="$Name")
 
-        //- .form-group
-        //-   label Rating
-        //-     input.form-control(type="number", name="$Rating", value = 1000)
+        .form-group
+          label Email
+            input.form-control(type="text", name="$Email")
 
         button.btn.btn-primary(type="submit") Create New Hosts
 

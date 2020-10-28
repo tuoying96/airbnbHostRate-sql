@@ -10,7 +10,7 @@ function myDB() {
     const db = getDb();
 
     const PAGE_SIZE = 10;
-    const query = `SELECT hid, Hosts.name, Hosts.startFrom, ROUND(AVG(listRating), 2) as hostRating
+    const query = `SELECT hid, Hosts.name, Hosts.email, Hosts.startFrom, ROUND(AVG(listRating), 2) as hostRating
     FROM Hosts,
     (
     SELECT listingid, hostid as hid, Listings.listingName, AVG(Listings.rating) as listRating
@@ -19,7 +19,7 @@ function myDB() {
     )
     WHERE hid = Hosts.hostid
     GROUP BY hid
-    ;`;
+    LIMIT ${PAGE_SIZE} OFFSET ${PAGE_SIZE * (page - 1)};`;
 
     const allPromise = util.promisify(db.all.bind(db));
 
@@ -32,53 +32,48 @@ function myDB() {
   myDB.createHost = function (host) {
     const db = getDb();
 
-    const query = `
-    INSERT INTO Hosts(name, email)
-VALUES($Name, $Email, "Anonymity", "@email.com");`;
+    const query = `INSERT INTO Hosts(name, email) VALUES($Name, $Email);`;
 
     const runPromise = util.promisify(db.run.bind(db));
 
     return runPromise(query, host).finally(() => db.close());
   };
 
-  // myDB.updateSong = function (song) {
-  //   const db = getDb();
+  myDB.updateHost = function (host) {
+    const db = getDb();
 
-  //   const query = `
-  //   UPDATE tracks
-  //   SET
-  //     Name = $Name,
-  //     Milliseconds = $Milliseconds,
-  //     MediaTypeId = $MediaTypeId,
-  //     UnitPrice = $UnitPrice
-  //   WHERE
-  //     TrackId = $TrackId;`;
+    const query = `
+    UPDATE Hosts
+    SET
+      name = $Name,
+      email = $Email,
+      startFrom = $StartFrom
+    WHERE
+      hostid = $hostid;`;
 
-  //   const runPromise = util.promisify(db.run.bind(db));
+    const runPromise = util.promisify(db.run.bind(db));
 
-  //   return runPromise(query, {
-  //     $TrackId: +song.$TrackId,
-  //     $Name: song.$Name,
-  //     $Milliseconds: +song.$Milliseconds,
-  //     $MediaTypeId: 1,
-  //     $UnitPrice: 1.1,
-  //   })
-  //     .then(() => db)
-  //     .finally(() => db.close());
-  // };
+    return runPromise(query, {
+      $Hostid: +host.$Hostid,
+      $Name: host.$Name,
+      $Email: +host.$Email,
+    })
+      .then(() => db)
+      .finally(() => db.close());
+  };
 
-  // myDB.deleteSong = function (songId) {
-  //   const db = getDb();
+  myDB.deleteHost = function (hostid) {
+    const db = getDb();
 
-  //   const query = `
-  //   DELETE FROM tracks WHERE trackId==$trackId;`;
+    const query = `
+    DELETE FROM Hosts WHERE hostid==$hostid;`;
 
-  //   const runPromise = util.promisify(db.run.bind(db));
+    const runPromise = util.promisify(db.run.bind(db));
 
-  //   return runPromise(query, {
-  //     $trackId: songId,
-  //   }).finally(() => db.close());
-  // };
+    return runPromise(query, {
+      $hostid: hostid,
+    }).finally(() => db.close());
+  };
 
   return myDB;
 }

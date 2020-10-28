@@ -39,5 +39,35 @@ router.post("/hosts/create", async (req, res) => {
     res.redirect("/hosts");
   }
 });
+router.post("/hosts/delete", async (req, res) => {
+  try {
+    const host = req.body;
+    await myDB.deleteHost(host.$hostid);
+
+    req.session.msg = "Host deleted";
+    res.redirect("/hosts");
+  } catch (err) {
+    console.log("got error update");
+    req.session.err = err.message;
+    res.redirect("/hosts");
+  }
+});
+
+router.post("/hosts/update", async (req, res) => {
+  try {
+    const host = req.body;
+    const db = await myDB.updateHost(host);
+
+    console.log("update", db);
+
+    req.session.msg = "Host Updated";
+    res.redirect("/hosts");
+  } catch (err) {
+    console.log("got error update");
+    req.session.err = err.message;
+    res.redirect("/hosts");
+  }
+});
+
 
 module.exports = router;
