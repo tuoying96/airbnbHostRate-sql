@@ -29,56 +29,56 @@ function myDB() {
     });
   };
 
-  myDB.createSong = function (song) {
+  myDB.createHost = function (host) {
     const db = getDb();
 
     const query = `
-    INSERT INTO tracks(Name, Milliseconds, MediaTypeId, UnitPrice)
-VALUES($Name, $Milliseconds, 1, 1);`;
+    INSERT INTO Hosts(name, email)
+VALUES($Name, $Email, 1, 1);`;
 
     const runPromise = util.promisify(db.run.bind(db));
 
-    return runPromise(query, song).finally(() => db.close());
+    return runPromise(query, host).finally(() => db.close());
   };
 
-  myDB.updateSong = function (song) {
-    const db = getDb();
+  // myDB.updateSong = function (song) {
+  //   const db = getDb();
 
-    const query = `
-    UPDATE tracks
-    SET
-      Name = $Name,
-      Milliseconds = $Milliseconds,
-      MediaTypeId = $MediaTypeId,
-      UnitPrice = $UnitPrice
-    WHERE
-      TrackId = $TrackId;`;
+  //   const query = `
+  //   UPDATE tracks
+  //   SET
+  //     Name = $Name,
+  //     Milliseconds = $Milliseconds,
+  //     MediaTypeId = $MediaTypeId,
+  //     UnitPrice = $UnitPrice
+  //   WHERE
+  //     TrackId = $TrackId;`;
 
-    const runPromise = util.promisify(db.run.bind(db));
+  //   const runPromise = util.promisify(db.run.bind(db));
 
-    return runPromise(query, {
-      $TrackId: +song.$TrackId,
-      $Name: song.$Name,
-      $Milliseconds: +song.$Milliseconds,
-      $MediaTypeId: 1,
-      $UnitPrice: 1.1,
-    })
-      .then(() => db)
-      .finally(() => db.close());
-  };
+  //   return runPromise(query, {
+  //     $TrackId: +song.$TrackId,
+  //     $Name: song.$Name,
+  //     $Milliseconds: +song.$Milliseconds,
+  //     $MediaTypeId: 1,
+  //     $UnitPrice: 1.1,
+  //   })
+  //     .then(() => db)
+  //     .finally(() => db.close());
+  // };
 
-  myDB.deleteSong = function (songId) {
-    const db = getDb();
+  // myDB.deleteSong = function (songId) {
+  //   const db = getDb();
 
-    const query = `
-    DELETE FROM tracks WHERE trackId==$trackId;`;
+  //   const query = `
+  //   DELETE FROM tracks WHERE trackId==$trackId;`;
 
-    const runPromise = util.promisify(db.run.bind(db));
+  //   const runPromise = util.promisify(db.run.bind(db));
 
-    return runPromise(query, {
-      $trackId: songId,
-    }).finally(() => db.close());
-  };
+  //   return runPromise(query, {
+  //     $trackId: songId,
+  //   }).finally(() => db.close());
+  // };
 
   return myDB;
 }
