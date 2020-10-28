@@ -12,8 +12,13 @@ This database aim to be an internal tool to manage Airbnb Host.
 - Both Airbnb staff and Airbnb hosts can submit a review for the lastest listing, and the default rating for this new review is 5.
 ### Tasks:
 The above rules requires us to create six routes
-- `"/hosts"` The home page will redirect to ("/hosts"), which is the main routes. In this page, it shows the Airbnb host database with their name, email, the date they joined Airbnb and most importantly, their hostRating.
-- `"/hosts/create"`
+- `/hosts` The home page will redirect to ("/hosts"), which is the main routes. In this page, it shows the Airbnb host database with their name, email, the date they joined Airbnb and most importantly, their hostRating.
+- `/hosts/create` The CREATE interface let users to create a new Airbnb user, and post data to database.
+- `/hosts/createListing` This route let Airbnb host to create their new listing and post data to database. Besides, because this is a new listing, so I assumen that the default rating for this listing is 5. Later, Airbnb staff can update its rating based on the revires.
+- `/hosts/submitReview` This route let Airbnb staff or other users to submit reviews for the newest added lsting and post it to the database.
+- `/hosts/delete` This route let us to delete the records in the Hosts table. Besides, because tht hostid in the Hosts table is foreign key in Listings table, and listingid in Listing Table is the foreign key in Reviews Table, all of the related records will bbe deleted.
+- `/hosts/update` This route let us to uodate the information and records in the Hosts table.
+
 
 
 
