@@ -8,9 +8,12 @@ This database aim to be an internal tool to manage Airbnb Host.
 - New airbnb hosts can create their account in this application. In the right side of the website, there is a form to submit their name and email to create a new account. Bresides, they will be given a new and unique hostId, which is hidden in this page but will be recorded in the database.
 - Airbnb hosts can update their information in this application, for example, update their name and email address
 - Airbnb hosts can create new listing in this interface. After they click the "Create New Listing" button, this listing data will be stored in the airbnb.db database.
-- Airbnb staff can upddate the rating of hosts based on their listings rating. So, the Rating showed in this page is actually hostRating which is a derived attribute. That means the hostRating does not physical exist in out database, and it is calculated base the the rating attribute in Listings table.
-
+- Airbnb staff have the access to upddate the rating of hosts based on their listings rating. So, the Rating showed in this page is actually hostRating which is a derived attribute. That means the hostRating does not physical exist in out database, and it is calculated base the the rating attribute in Listings table.
+- Both Airbnb staff and Airbnb hosts can submit a review for the lastest listing, and the default rating for this new review is 5.
 ### Tasks:
+The above rules requires us to create six routes
+- `"/hosts"` The home page will redirect to ("/hosts"), which is the main routes. In this page, it shows the Airbnb host database with their name, email, the date they joined Airbnb and most importantly, their hostRating.
+- `"/hosts/create"`
 
 
 
