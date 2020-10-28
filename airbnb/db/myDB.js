@@ -34,7 +34,7 @@ function myDB() {
 
     const query = `
     INSERT INTO Hosts(name, email)
-VALUES($Name, $Email, 1, 1);`;
+VALUES($Name, $Email, "Anonymity", "@email.com");`;
 
     const runPromise = util.promisify(db.run.bind(db));
 
