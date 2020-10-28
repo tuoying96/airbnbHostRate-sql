@@ -69,7 +69,7 @@ function myDB() {
     const db = getDb();
 
     const query = `
-    DELETE FROM Hosts WHERE hostid==$hostid;`;
+    DELETE FROM Listings WHERE hostid==$hostid;`;
 
     const runPromise = util.promisify(db.run.bind(db));
 
