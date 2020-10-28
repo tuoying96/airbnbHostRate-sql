@@ -4,12 +4,12 @@ const util = require("util");
 function myDB() {
   const myDB = {};
 
-  const getDb = () => new sqlite3.Database("./db/airbnb.sqlite3");
+  const getDb = () => new sqlite3.Database("./db/airbnb.db");
 
   myDB.getHosts = function (page) {
     const db = getDb();
 
-    const PAGE_SIZE = 10;
+    const PAGE_SIZE = 10;     
     const query = `SELECT hid, Hosts.name, Hosts.email, Hosts.startFrom, ROUND(AVG(listRating), 2) as hostRating
     FROM Hosts,
     (
@@ -32,12 +32,38 @@ function myDB() {
   myDB.createHost = function (host) {
     const db = getDb();
 
-    const query = `INSERT INTO Hosts(name, email) VALUES($Name, $Email);`;
+    const query = `
+    INSERT INTO Hosts(name, email, startFrom) VALUES($Name, $Email, "2020-10-24 17:16:38");
+    INSERT INTO Listings (hostid,listingName, rating) VALUES ((SELECT MAX(hostid) FROM Hosts), "New listing", 5);
+    INSERT INTO Reviews (listingid,rating) VALUES ((SELECT MAX(listingid) FROM Listings), 5);`;
 
-    const runPromise = util.promisify(db.run.bind(db));
+    const runPromise = util.promisify(db.run.bind(db)); 
 
     return runPromise(query, host).finally(() => db.close());
   };
+
+
+  // myDB.createListing = function (host) {
+  //   const db = getDb();
+
+  //   const query = `INSERT INTO Listings (hostid,listingName, rating) VALUES ((SELECT MAX(hostid) FROM Hosts), "New listing", 5);`;
+
+  //   const runPromise = util.promisify(db.run.bind(db)); 
+
+  //   return runPromise(query, host).finally(() => db.close());
+  // };
+
+  // myDB.createReview = function (host) {
+  //   const db = getDb();
+
+  //   const query = `
+  //   INSERT INTO Reviews (listingid,rating) VALUES ((SELECT MAX(listingid) FROM Listings), 5);`;
+
+  //   const runPromise = util.promisify(db.run.bind(db)); 
+
+  //   return runPromise(query, host).finally(() => db.close());
+  // };
+
 
   myDB.updateHost = function (host) {
     const db = getDb();

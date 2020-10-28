@@ -32,6 +32,8 @@ router.post("/hosts/create", async (req, res) => {
   try {
     console.log("Create host", host);
     await myDB.createHost(host, res);
+    // await myDB.createListing(host, res);
+    // await myDB.createReview(host, res);
     req.session.msg = "Host created";
     res.redirect("/hosts");
   } catch (err) {
