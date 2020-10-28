@@ -10,16 +10,8 @@ function myDB() {
     const db = getDb();
 
     const PAGE_SIZE = 10;
-    const query = `SELECT hid, Hosts.name, Hosts.startFrom, ROUND(AVG(listRating), 2) as hostRating
-      FROM Hosts,
-      (
-      SELECT listingid, hostid as hid, Listings.listingName, AVG(Listings.rating) as listRating
-      FROM  Listings
-      GROUP BY listingid
-      )
-      WHERE hid = Hosts.hostid
-      GROUP BY hid
-      LIMIT ${PAGE_SIZE} OFFSET ${PAGE_SIZE * (page - 1)};`;
+    const query = `SELECT Hosts.name, Hosts.startFrom
+    FROM Hosts;`;
 
     const allPromise = util.promisify(db.all.bind(db));
 

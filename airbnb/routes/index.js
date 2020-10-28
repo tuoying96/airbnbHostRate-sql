@@ -3,7 +3,6 @@ var router = express.Router();
 
 const myDB = require("../db/myDB.js");
 
-
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.redirect("/hosts");
