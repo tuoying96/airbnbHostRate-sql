@@ -28,4 +28,18 @@ router.get("/hosts", async (req, res) => {
   }
 });
 
+router.post("/hosts/create", async (req, res) => {
+  const song = req.body;
+
+  try {
+    console.log("Create host", host);
+    await myDB.createHost(host, res);
+    req.session.msg = "Host created";
+    res.redirect("/hosts");
+  } catch (err) {
+    req.session.err = err.message;
+    res.redirect("/hosts");
+  }
+});
+
 module.exports = router;
