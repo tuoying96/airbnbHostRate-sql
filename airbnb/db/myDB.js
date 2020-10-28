@@ -4,7 +4,7 @@ const util = require("util");
 function myDB() {
   const myDB = {};
 
-  const getDb = () => new sqlite3.Database("./db/airbnb.sqlite3");
+  const getDb = () => new sqlite3.Database("./db/airbnb.db");
 
   myDB.getHosts = function (page) {
     const db = getDb();
@@ -54,9 +54,9 @@ function myDB() {
     const runPromise = util.promisify(db.run.bind(db));
 
     return runPromise(query, {
-      $Hostid: +host.$Hostid,
+      $Hostid: host.$Hostid,
       $Name: host.$Name,
-      $Email: +host.$Email,
+      $Email: host.$Email,
     })
       .then(() => db)
       .finally(() => db.close());
