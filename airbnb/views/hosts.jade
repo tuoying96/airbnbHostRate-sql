@@ -15,12 +15,12 @@ block content
       div
         each h in hosts
           form.p-2(action="/hosts/delete" method="POST")
-            input.flex-shrink-1.m-1(style="min-width:20px" type="hidden" name="$hostid" value=Hosts.hostid)
+            input.flex-shrink-1.m-1(style="min-width:20px" type="hidden" name="$hostid" value=h.hostid)
 
             label.form-group Name:
-              input.form-control.m-1(style="min-width:20px" type="text" name="$Name" value=Hosts.name)
+              input.form-control.m-1(style="min-width:20px" type="text" name="$Name" value=h.name)
             label.form-group Email:
-              input.form-control.m-1(style="min-width:20px" type="text" name="$Email" value=Hosts.email)
+              input.form-control.m-1(style="min-width:20px" type="text" name="$Email" value=h.email)
             //- label.form-group Rating:
             //-   input.form-control.m-1(style="min-width:20px" type="number" name="$Milliseconds" value=s.Milliseconds)
             .form-group

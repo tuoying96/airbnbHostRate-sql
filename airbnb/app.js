@@ -5,9 +5,9 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const session = require("express-session");
 
-var indexRouter = require('./routes/index');
+const indexRouter = require("./routes/index");
 
-var app = express();
+const app = express();
 
 app.set("trust proxy", 1); // trust first proxy
 app.use(
