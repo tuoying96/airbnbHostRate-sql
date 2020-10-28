@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database(':memory:');
+// var sqlite3 = require('sqlite3').verbose();
+const myDB = require("../db/myDB.js");
 
 db.serialize(function() {
   db.run("CREATE TABLE lorem (info TEXT)");
