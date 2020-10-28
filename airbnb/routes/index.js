@@ -42,6 +42,20 @@ router.post("/hosts/create", async (req, res) => {
   }
 });
 
+router.post("/hosts/createListing", async (req, res) => {
+  const host = req.body;
+
+  try {
+    console.log("Create Listing", host);
+    await myDB.createListing(host, res);
+    req.session.msg = "Listing created";
+    res.redirect("/hosts");
+  } catch (err) {
+    req.session.err = err.message;
+    res.redirect("/hosts");
+  }
+});
+
 router.post("/hosts/delete", async (req, res) => {
   try {
     const host = req.body;

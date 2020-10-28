@@ -32,26 +32,38 @@ function myDB() {
   myDB.createHost = function (host) {
     const db = getDb();
 
-    const query = `
-    INSERT INTO Hosts(name, email, startFrom) VALUES($Name, $Email, "2020-10-24 17:16:38");
-    INSERT INTO Listings (hostid,listingName, rating) VALUES ((SELECT MAX(hostid) FROM Hosts), "New listing", 5);
-    INSERT INTO Reviews (listingid,rating) VALUES ((SELECT MAX(listingid) FROM Listings), 5);`;
+    // db.serialize(() => {
+    //   // Queries scheduled here will be serialized.
+    //   db.run(`INSERT INTO Hosts(name, email, startFrom) VALUES($Name, $Email, "2020-10-24 17:16:38")`)
+    //     .run(`INSERT INTO Listings (hostid,listingName, rating) VALUES ((SELECT MAX(hostid) FROM Hosts)`) 
+    // });
+
+        const query = `
+    INSERT INTO Hosts(name, email, startFrom) VALUES($Name, $Email, "2020-10-24 17:16:38");`
+
+
+    // const query = `
+    // INSERT INTO Hosts(name, email, startFrom) VALUES($Name, $Email, "2020-10-24 17:16:38");
+    // INSERT INTO Listings (hostid, listingName, rating) VALUES ((SELECT MAX(hostid) FROM Hosts),  "Pea", 5)
+    // INSERT INTO Reviews (listingid,rating) VALUES ((SELECT MAX(listingid) FROM Listings), 5);`;
 
     const runPromise = util.promisify(db.run.bind(db)); 
+    // console.log("after fun promise");
 
     return runPromise(query, host).finally(() => db.close());
   };
 
 
-  // myDB.createListing = function (host) {
-  //   const db = getDb();
+  myDB.createListing = function (host) {
+    const db = getDb();
+    console.log("I am in createListing");
+    const query = `INSERT INTO Listings (hostid, listingName, rating) VALUES ((SELECT MAX(hostid) FROM Hosts), $ListingName, 5)`;
+    console.log("Finished Listing");
 
-  //   const query = `INSERT INTO Listings (hostid,listingName, rating) VALUES ((SELECT MAX(hostid) FROM Hosts), "New listing", 5);`;
+    const runPromise = util.promisify(db.run.bind(db)); 
 
-  //   const runPromise = util.promisify(db.run.bind(db)); 
-
-  //   return runPromise(query, host).finally(() => db.close());
-  // };
+    return runPromise(query, host).finally(() => db.close());
+  };
 
   // myDB.createReview = function (host) {
   //   const db = getDb();
@@ -83,15 +95,15 @@ function myDB() {
       $hostid: +host.$hostid,
       $name: host.$name,
       $email: host.$email,
-      $phone: host.$phone,
-      $responseRate: host.$responseRate,
-      $startFrom: host.$startFrom
+      // $phone: host.$phone,
+      // $responseRate: host.$responseRate,
+      // $startFrom: host.$startFrom
     })
       .then(() => db)
       .finally(() => db.close());
   };
 
-  myDB.deleteHost = function (hostid) {
+  myDB.deleteHost = function (hostId) {
     const db = getDb();
 
     const query = `
@@ -100,7 +112,7 @@ function myDB() {
     const runPromise = util.promisify(db.run.bind(db));
 
     return runPromise(query, {
-      $hostid: hostid,
+      $hostid: hostId,
     }).finally(() => db.close());
   };
 

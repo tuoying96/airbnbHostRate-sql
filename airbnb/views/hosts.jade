@@ -95,6 +95,15 @@ block content
 
         button.btn.btn-primary(type="submit") Create New Hosts
 
+      h2 Create New Listing
+
+      form(action="/hosts/createListing", method="post")
+        .form-group
+          label Listing Name
+            input.form-control(type="text", name="$ListingName")
+
+        button.btn.btn-primary(type="submit") Create New Listing
+
 
 
 
