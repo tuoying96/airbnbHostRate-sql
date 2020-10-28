@@ -82,8 +82,7 @@ block content
 
 
     .col-4
-      h2 Create New Hosts
-
+      h2 Become A New Hosts
       form(action="/hosts/create", method="post")
         .form-group
           label Name
@@ -94,15 +93,27 @@ block content
             input.form-control(type="text", name="$Email")
 
         button.btn.btn-primary(type="submit") Create New Hosts
+      div
+    
 
       h2 Create New Listing
-
       form(action="/hosts/createListing", method="post")
         .form-group
-          label Listing Name
+          label Welcome to join Airbnb Host! 
+          label Please create your first listing:
             input.form-control(type="text", name="$ListingName")
 
         button.btn.btn-primary(type="submit") Create New Listing
+
+      div
+      h2 Submit Review
+
+      form(action="/hosts/submitReview", method="post")
+        .form-group
+          label Please write your review for this listing:
+            input.form-control(type="text", name="$Review")
+
+        button.btn.btn-primary(type="submit") Submit New Review
 
 
 

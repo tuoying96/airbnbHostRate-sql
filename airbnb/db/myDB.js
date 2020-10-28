@@ -38,14 +38,11 @@ function myDB() {
     //     .run(`INSERT INTO Listings (hostid,listingName, rating) VALUES ((SELECT MAX(hostid) FROM Hosts)`) 
     // });
 
-        const query = `
-    INSERT INTO Hosts(name, email, startFrom) VALUES($Name, $Email, "2020-10-24 17:16:38");`
-
-
+    const query = `INSERT INTO Hosts(name, email, startFrom) VALUES($Name, $Email, "2020-10-24 17:16:38");`
     // const query = `
     // INSERT INTO Hosts(name, email, startFrom) VALUES($Name, $Email, "2020-10-24 17:16:38");
     // INSERT INTO Listings (hostid, listingName, rating) VALUES ((SELECT MAX(hostid) FROM Hosts),  "Pea", 5)
-    // INSERT INTO Reviews (listingid,rating) VALUES ((SELECT MAX(listingid) FROM Listings), 5);`;
+    // INSERT INTO Reviews (listingid,content) VALUES ((SELECT MAX(listingid) FROM Listings), $Review);`;
 
     const runPromise = util.promisify(db.run.bind(db)); 
     // console.log("after fun promise");
@@ -65,54 +62,61 @@ function myDB() {
     return runPromise(query, host).finally(() => db.close());
   };
 
-  // myDB.createReview = function (host) {
-  //   const db = getDb();
+  myDB.submitReview = function (host) {
+    const db = getDb();
 
-  //   const query = `
-  //   INSERT INTO Reviews (listingid,rating) VALUES ((SELECT MAX(listingid) FROM Listings), 5);`;
+    const query = `
+    INSERT INTO Reviews (listingid, content) VALUES ((SELECT MAX(listingid) FROM Listings), $Review);`;
 
-  //   const runPromise = util.promisify(db.run.bind(db)); 
+    const runPromise = util.promisify(db.run.bind(db)); 
 
-  //   return runPromise(query, host).finally(() => db.close());
-  // };
+    return runPromise(query, host).finally(() => db.close());
+  };
 
 
   myDB.updateHost = function (host) {
     const db = getDb();
 
-    const query = `
-    UPDATE Hosts
-    SET
-      name = $name,
-      email = $email,
-      startFrom = $startFrom
-    WHERE
-      hostid = $hostid;`;
+    // const query = `
+    // UPDATE Hosts
+    // SET
+    //   name = $name,
+    //   email = $email,
+    //   startFrom = $startFrom
+    // WHERE
+    //   hostid = $hostid;`;
+
+    const query = `UPDATE Hosts SET name = "test1", email = "test1", startFrom = "test1" WHERE hostid = 2;`;
+    console.log("In  Updateing");
 
     const runPromise = util.promisify(db.run.bind(db));
 
-    return runPromise(query, {
-      $hostid: +host.$hostid,
-      $name: host.$name,
-      $email: host.$email,
+    return runPromise(query, host
+      // {
+      // $hostid: +host.$hostid,
+      // $name: host.$Name,
+      // $email: host.$Email,
       // $phone: host.$phone,
       // $responseRate: host.$responseRate,
       // $startFrom: host.$startFrom
-    })
+    // }
+    )
       .then(() => db)
       .finally(() => db.close());
   };
 
-  myDB.deleteHost = function (hostId) {
+  myDB.deleteHost = function (hostid) {
     const db = getDb();
 
     const query = `
     DELETE FROM Hosts WHERE hostid==$hostid;`;
+    
+    console.log("Finished Deleting");
 
     const runPromise = util.promisify(db.run.bind(db));
 
     return runPromise(query, {
-      $hostid: hostId,
+      $hostid: hostid,
     }).finally(() => db.close());
   };
 

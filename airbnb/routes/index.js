@@ -56,6 +56,20 @@ router.post("/hosts/createListing", async (req, res) => {
   }
 });
 
+router.post("/hosts/submitReview", async (req, res) => {
+  const host = req.body;
+
+  try {
+    console.log("Submit Review", host);
+    await myDB.submitReview(host, res);
+    req.session.msg = "Review Submitted";
+    res.redirect("/hosts");
+  } catch (err) {
+    req.session.err = err.message;
+    res.redirect("/hosts");
+  }
+});
+
 router.post("/hosts/delete", async (req, res) => {
   try {
     const host = req.body;
