@@ -3,6 +3,9 @@ Business domain language
 User:
 Rules:
 Tasks:
+We used the data from Airbnb’s website:
+http://insideairbnb.com/get-the-data.html
+
   
 - Conceptual model: create a diagram you can share with clients  
 [expect to see Lucci Chat]  
