@@ -39,6 +39,7 @@ router.post("/hosts/create", async (req, res) => {
     res.redirect("/hosts");
   }
 });
+
 router.post("/hosts/delete", async (req, res) => {
   try {
     const host = req.body;
