@@ -1,12 +1,11 @@
 # AirbnbHostRate
-Business domain language  
-
-- User: Airbnb Hosts
-- Rules:
+## Business Documentation  
+### User: Airbnb Hosts
+### Rules:
 This database aim to be an internal tool to manage Airbnb Host.  
-As for the Data schema, I used the data from Airbnb’s website: http://insideairbnb.com/get-the-data.html.  
+- As for the Data schema, I used the data from Airbnb’s website: http://insideairbnb.com/get-the-data.html.  
 1. 
-- Tasks:
+### Tasks:
 
 
 
