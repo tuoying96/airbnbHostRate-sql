@@ -14,8 +14,8 @@ router.get("/hosts", async (req, res) => {
   console.log("/hosts", page);
 
   try {
-    const songs = await myDB.getHosts(page);
-    // console.log("got songs", songs);
+    const hosts = await myDB.getHosts(page);
+    // console.log("got hosts", hosts);
     res.render("hosts", {
       hosts: hosts,
       err: req.session.err,
@@ -23,12 +23,12 @@ router.get("/hosts", async (req, res) => {
     });
   } catch (err) {
     console.log("got error", err);
-    res.render("hosts", { err: err.message, songs: [] });
+    res.render("hosts", { err: err.message, hosts: [] });
   }
 });
 
 router.post("/hosts/create", async (req, res) => {
-  const song = req.body;
+  const host = req.body;
 
   try {
     console.log("Create host", host);
