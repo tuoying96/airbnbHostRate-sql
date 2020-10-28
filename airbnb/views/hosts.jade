@@ -15,7 +15,7 @@ block content
       div
         each h in hosts
           form.p-2(action="/songs/delete" method="POST")
-            input.flex-shrink-1.m-1(style="min-width:20px" type="hidden" name="$TrackId" value=s.TrackId)
+            input.flex-shrink-1.m-1(style="min-width:20px" type="hidden" name="$hostis" value=Hosts.hostid)
 
             label.form-group Name:
               input.form-control.m-1(style="min-width:20px" type="text" name="$Name" value=Hosts.name)
