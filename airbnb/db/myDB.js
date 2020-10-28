@@ -10,10 +10,10 @@ function myDB() {
     const db = getDb();
 
     const PAGE_SIZE = 10;
-    const query = `SELECT hid, Hosts.name, Hosts.startFrom, ROUND(AVG(listR), 2) as hostR
+    const query = `SELECT hid, Hosts.name, Hosts.startFrom, ROUND(AVG(listRating), 2) as hostRating
       FROM Hosts,
       (
-      SELECT listingid, hostid as hid, Listings.listingName, AVG(Listings.rating) as listR
+      SELECT listingid, hostid as hid, Listings.listingName, AVG(Listings.rating) as listRating
       FROM  Listings
       GROUP BY listingid
       )
