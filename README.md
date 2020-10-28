@@ -4,7 +4,12 @@
 ### Rules:
 This database aim to be an internal tool to manage Airbnb Host.  
 - As for the Data schema, I used the data from Airbnb’s website: http://insideairbnb.com/get-the-data.html.  
-1. 
+- This internal host management tool is used for Airbnb hosts and Airbnb staff to manage the hosts' profile, listing informstion and listing reviews.
+- New airbnb hosts can create their account in this application. In the right side of the website, there is a form to submit their name and email to create a new account. Bresides, they will be given a new and unique hostId, which is hidden in this page but will be recorded in the database.
+- Airbnb hosts can update their information in this application, for example, update their name and email address
+- Airbnb hosts can create new listing in this interface. After they click the "Create New Listing" button, this listing data will be stored in the airbnb.db database.
+- Airbnb staff can upddate the rating of hosts based on their listings rating. So, the Rating showed in this page is actually hostRating which is a derived attribute. That means the hostRating does not physical exist in out database, and it is calculated base the the rating attribute in Listings table.
+
 ### Tasks:
 
 
