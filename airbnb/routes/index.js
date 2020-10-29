@@ -42,6 +42,20 @@ router.post("/hosts/create", async (req, res) => {
   }
 });
 
+router.post("/hosts/createHostInfo", async (req, res) => {
+  const host = req.body;
+
+  try {
+    console.log("Create Hostinfo", host);
+    await myDB.createHostInfo(host, res);
+    req.session.msg = "HostInfo created";
+    res.redirect("/hosts");
+  } catch (err) {
+    req.session.err = err.message;
+    res.redirect("/hosts");
+  }
+});
+
 router.post("/hosts/createListing", async (req, res) => {
   const host = req.body;
 

@@ -10,14 +10,20 @@ function myDB() {
     const db = getDb();
 
     const PAGE_SIZE = 10;     
-    const query = `SELECT hid, Hosts.name, Hosts.email, Hosts.startFrom, ROUND(AVG(listRating), 2) as hostRating
-    FROM Hosts,
-    (
-    SELECT listingid, hostid as hid, Listings.listingName, AVG(Listings.rating) as listRating
-    FROM  Listings
-    GROUP BY listingid
-    )
-    WHERE hid = Hosts.hostid
+    const query = `SELECT hid, name, email, HostInfo.startFrom, hostRating
+    FROM HostInfo, 
+      (
+      SELECT hid, Hosts.name, Hosts.email, ROUND(AVG(listRating), 2) as hostRating
+      FROM Hosts, 
+      (
+      SELECT listingid, hostid as hid, Listings.listingName, AVG(Listings.rating) as listRating
+      FROM  Listings
+      GROUP BY listingid
+      )
+      WHERE hid = Hosts.hostid
+      GROUP BY hid
+      )
+    WHERE HostInfo.hostid = hid AND hostRating > 2
     GROUP BY hid
     LIMIT ${PAGE_SIZE} OFFSET ${PAGE_SIZE * (page - 1)};`;
 
@@ -38,7 +44,7 @@ function myDB() {
     //     .run(`INSERT INTO Listings (hostid,listingName, rating) VALUES ((SELECT MAX(hostid) FROM Hosts)`) 
     // });
 
-    const query = `INSERT INTO Hosts(name, email, startFrom) VALUES($Name, $Email, "2020-10-24 17:16:38");`
+    const query = `INSERT INTO Hosts(name, email) VALUES($Name, $Email);`
     // const query = `
     // INSERT INTO Hosts(name, email, startFrom) VALUES($Name, $Email, "2020-10-24 17:16:38");
     // INSERT INTO Listings (hostid, listingName, rating) VALUES ((SELECT MAX(hostid) FROM Hosts),  "Pea", 5)
@@ -46,6 +52,17 @@ function myDB() {
 
     const runPromise = util.promisify(db.run.bind(db)); 
     // console.log("after fun promise");
+
+    return runPromise(query, host).finally(() => db.close());
+  };
+
+  myDB.createHostInfo = function (host) {
+    const db = getDb();
+    console.log("I am in createHostInfo");
+    const query = `INSERT INTO HostInfo (hostid, responseRate, startFrom) VALUES ((SELECT MAX(hostid) FROM Hosts), $ResponseRate, "10/24/20 17:16")`;
+    console.log("Finished Listing");
+
+    const runPromise = util.promisify(db.run.bind(db)); 
 
     return runPromise(query, host).finally(() => db.close());
   };
@@ -108,8 +125,7 @@ function myDB() {
   myDB.deleteHost = function (hostid) {
     const db = getDb();
 
-    const query = `
-    DELETE FROM Hosts WHERE hostid==$hostid;`;
+    const query = `DELETE FROM Hosts WHERE hostid==$hostid;`;
     
     console.log("Finished Deleting");
 

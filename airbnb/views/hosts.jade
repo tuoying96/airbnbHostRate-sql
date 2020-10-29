@@ -64,21 +64,21 @@ block content
           li(class="page-item")
             a(class="page-link" href="/hosts?page=13") 13
           li(class="page-item")
-            a(class="page-link" href="/hosts?page=14") 14
-          li(class="page-item")
-            a(class="page-link" href="/hosts?page=15") 15
-          li(class="page-item")
-            a(class="page-link" href="/hosts?page=16") 16
-          li(class="page-item")
-            a(class="page-link" href="/hosts?page=17") 17
-          li(class="page-item")
-            a(class="page-link" href="/hosts?page=18") 18
-          li(class="page-item")
-            a(class="page-link" href="/hosts?page=19") 19
-          li(class="page-item")
-            a(class="page-link" href="/hosts?page=20") 20
-          li(class="page-item")
-            a(class="page-link" href="/hosts?page=21") 21
+          //-   a(class="page-link" href="/hosts?page=14") 14
+          //- li(class="page-item")
+          //-   a(class="page-link" href="/hosts?page=15") 15
+          //- li(class="page-item")
+          //-   a(class="page-link" href="/hosts?page=16") 16
+          //- li(class="page-item")
+          //-   a(class="page-link" href="/hosts?page=17") 17
+          //- li(class="page-item")
+          //-   a(class="page-link" href="/hosts?page=18") 18
+          //- li(class="page-item")
+          //-   a(class="page-link" href="/hosts?page=19") 19
+          //- li(class="page-item")
+          //-   a(class="page-link" href="/hosts?page=20") 20
+          //- li(class="page-item")
+          //-   a(class="page-link" href="/hosts?page=21") 21
 
 
     .col-4
@@ -94,8 +94,17 @@ block content
 
         button.btn.btn-primary(type="submit") Create New Hosts
       div
-    
 
+      h2 New Host Profile
+      form(action="/hosts/createHostInfo", method="post")
+        .form-group
+          label please fill out the Response Rate
+            input.form-control(type="text", name="$ResponseRate")
+
+        button.btn.btn-primary(type="submit") Submit Response Rate
+
+      div
+  
       h2 Create New Listing
       form(action="/hosts/createListing", method="post")
         .form-group

@@ -5,9 +5,13 @@ CREATE TABLE "Hosts" (
 	"name"	TEXT,
 	"email"	TEXT,
 	"phone"	NUMERIC,
-	"responseRate"	NUMERIC,
-	"startFrom"	TEXT,
 	PRIMARY KEY("hostid" AUTOINCREMENT)
+);
+
+CREATE TABLE "HostInfo" (
+	"hostid"	INTEGER,
+	"responseRate"	REAL,
+	"startFrom"	TEXT
 );
 
 CREATE TABLE "Listings" (
@@ -32,21 +36,31 @@ CREATE TABLE "Reviews" (
 );
 
 -- Read tables
-SELECT hid, Hosts.name, Hosts.email, Hosts.startFrom, ROUND(AVG(listRating), 2) as hostRating
-    FROM Hosts,
-    (
-    SELECT listingid, hostid as hid, Listings.listingName, AVG(Listings.rating) as listRating
-    FROM  Listings
-    GROUP BY listingid
+SELECT hid, name, email, HostInfo.startFrom, hostRating
+	FROM HostInfo, 
+		(
+		SELECT hid, Hosts.name, Hosts.email, ROUND(AVG(listRating), 2) as hostRating
+		FROM Hosts, 
+		(
+		SELECT listingid, hostid as hid, Listings.listingName, AVG(Listings.rating) as listRating
+		FROM  Listings
+		GROUP BY listingid
+		)
+		WHERE hid = Hosts.hostid
+		GROUP BY hid
     )
-    WHERE hid = Hosts.hostid
-    GROUP BY hid
-    LIMIT ${PAGE_SIZE} OFFSET ${PAGE_SIZE * (page - 1)};
+	WHERE HostInfo.hostid = hid AND hostRating > 2
+	GROUP BY hid
 
 -- Create records
-INSERT INTO Hosts(name, email, startFrom) VALUES($Name, $Email, "2020-10-24 17:16:38");
-INSERT INTO Listings (hostid, listingName, rating) VALUES ((SELECT MAX(hostid) FROM Hosts), $ListingName, 5);
-INSERT INTO Reviews (listingid, content) VALUES ((SELECT MAX(listingid) FROM Listings), $Review);
+INSERT INTO Hosts(name, email) 
+	VALUES($Name, $Email);
+INSERT INTO HostInfo (hostid, responseRate, startFrom) 
+	VALUES ((SELECT MAX(hostid) FROM Hosts), $ResponseRate, "10/24/20 17:16");
+INSERT INTO Listings (hostid, listingName, rating) 
+	VALUES ((SELECT MAX(hostid) FROM Hosts), $ListingName, 5);
+INSERT INTO Reviews (listingid, content) 
+	VALUES ((SELECT MAX(listingid) FROM Listings), $Review);
 
 -- Update records
 UPDATE Hosts
