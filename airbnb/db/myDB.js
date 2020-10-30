@@ -23,8 +23,9 @@ function myDB() {
       WHERE hid = Hosts.hostid
       GROUP BY hid
       )
-    WHERE HostInfo.hostid = hid AND hostRating > 2
+    WHERE HostInfo.hostid = hid
     GROUP BY hid
+    HAVING hostRating >2
     LIMIT ${PAGE_SIZE} OFFSET ${PAGE_SIZE * (page - 1)};`;
 
     const allPromise = util.promisify(db.all.bind(db));
@@ -103,14 +104,15 @@ function myDB() {
       hostid = $hostid;`;
 
     console.log("In  Updateing");
+    console.log(host);
 
     const runPromise = util.promisify(db.run.bind(db));
-    console.log(+host.$hostid + 1);
-    console.log(host.$Name);
+    console.log(+host.$hostid);
+    // console.log(host.$Name);
 
     return runPromise(query, 
       {
-      $hostid: +host.$hostid + 1,
+      $hostid: +host.$hostid,
       $Name: host.$Name,
       $Email: host.$Email,
     //   // $phone: host.$phone,
@@ -128,12 +130,12 @@ function myDB() {
     const query = `DELETE FROM Hosts WHERE hostid==$hostid;`;
     
     console.log("Finished Deleting");
-    console.log(+hostId+1);
+    console.log(+hostId);
 
     const runPromise = util.promisify(db.run.bind(db));
 
     return runPromise(query, {
-      $hostid: +hostId+1,
+      $hostid: +hostId,
     }).finally(() => db.close());
   };
 

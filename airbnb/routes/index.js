@@ -44,6 +44,7 @@ router.post("/hosts/create", async (req, res) => {
 
 router.post("/hosts/createHostInfo", async (req, res) => {
   const host = req.body;
+  
 
   try {
     console.log("Create Hostinfo", host);
@@ -87,7 +88,9 @@ router.post("/hosts/submitReview", async (req, res) => {
 router.post("/hosts/delete", async (req, res) => {
   try {
     const host = req.body;
+    console.log(host);
     await myDB.deleteHost(host.$hostid);
+    
 
     req.session.msg = "Host deleted";
     res.redirect("/hosts");
