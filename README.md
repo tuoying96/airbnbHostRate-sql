@@ -1,4 +1,6 @@
 # AirbnbHostRate
+Database ERD: https://app.lucidchart.com/invitations/accept/3a71c6af-ff6c-4597-9e47-524f9534f33a  
+Database UML: https://app.lucidchart.com/invitations/accept/15bdffef-19a2-46f9-ba1a-4a5ad6a12d07
 ## Business Documentation  
 ### User: 
 Airbnb  
