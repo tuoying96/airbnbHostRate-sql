@@ -16,8 +16,9 @@ function myDB() {
       SELECT hid, Hosts.name, Hosts.email, ROUND(AVG(listRating), 2) as hostRating
       FROM Hosts, 
       (
-      SELECT listingid, hostid as hid, Listings.listingName, AVG(Listings.rating) as listRating
+      SELECT listingid, hostid as hid, Listings.listingName, Listings.rating as listRating
       FROM  Listings
+      WHERE listRating > 0
       GROUP BY listingid
       )
       WHERE hid = Hosts.hostid
